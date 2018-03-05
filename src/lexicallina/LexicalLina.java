@@ -138,7 +138,6 @@ public class LexicalLina {
         if(!letter(statement.charAt(counter))) 
              ErrorStartWithLetter();
         
-        counter++;
         
         while(statement.charAt(counter) != '=' ){
             temp = statement.charAt(counter);
@@ -153,7 +152,7 @@ public class LexicalLina {
         }
         System.out.println(statement.charAt(counter));
         if(statement.charAt(counter) == '='){
-           intl3(statement,++counter);
+           intl3(statement,++counter,name);
         }else{
                 WrongSyntaxError();
         }
@@ -161,7 +160,7 @@ public class LexicalLina {
         
     }
     
-    public static void intl3(String statement,int pos){
+    public static void intl3(String statement,int pos,String varname){
         int counter = pos;
         // Checks comment string
         System.out.println(statement.charAt(pos));
@@ -181,7 +180,7 @@ public class LexicalLina {
         }
         
         if(statement.charAt(counter) == ';'){
-            finalint(name);
+            finalint(name,varname);
         }else{
                 WrongSyntaxError();
         }
@@ -190,8 +189,8 @@ public class LexicalLina {
         
     }
     
-    public static void finalint(String statement){
-        Token s = new Token(statement,"Integer value");
+    public static void finalint(String statement,String varname){
+        Token s = new Token(statement,varname);
         TokenStream.add(s);
         //FINISHED COMMENT!
     
