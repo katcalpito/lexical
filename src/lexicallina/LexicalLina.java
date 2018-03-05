@@ -342,8 +342,15 @@ public class LexicalLina {
                     break;
             }
            
-           
         }
+        
+        
+        int1("Integer rico=45;a",1);
+        com1("//cmt:boyo:/asd",1);
+        
+        yield1("yield(aye)",1);
+        yield1("yield(aye)a",1);
+        
         System.out.println("LIST OF TOKENS: ");
         for(Token T: TokenStream){
             System.out.print("< "+T.getName()+" , "+T.getPurpose()+" >\n");
