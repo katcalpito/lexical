@@ -195,9 +195,108 @@ public class LexicalLina {
         //FINISHED COMMENT!
     
     }
-    public static void yield1(){
+    public static void yield1(String statement, int pos){
+        if(statement.charAt(pos)=='y'){
+            pos+=1;}
+        if(statement.charAt(pos)=='i'){
+            pos+=1;}
+        if(statement.charAt(pos)=='e'){
+            pos+=1;}
+        if(statement.charAt(pos)=='l'){
+            pos+=1;}
+        if(statement.charAt(pos)=='d'){
+            pos+=1;}
+        if(statement.charAt(pos)=='('){
+            pos+=1;
+            if (statement.charAt(pos)=='"'){
+            pos+=1;
+            yield9(statement,pos);
+            } else {
+            
+            yield8(statement,pos);}
+        }
+        }
+    public static void yield8(String statement, int pos){
+        int counter = pos;
+        // Checks comment string
+       
+        String name = "";
+        char temp = ' ';
         
+        if(!letter(statement.charAt(counter))) 
+            ErrorStartWithLetter();
+        
+        
+        while(statement.charAt(counter) != ')' ){
+            temp = statement.charAt(counter);
+           
+            
+            if(letter(temp) || digit(temp) || whitespace(temp))
+                name += temp;
+            else
+                break;
+            
+            counter++;
+        }
+        
+        if(statement.charAt(counter++) == ')'){
+            if (statement.length() == counter){
+                yield10(name, "variable");
+            }
+        }else{
+                WrongSyntaxError();
+        }
     }
+    
+    public static void yield10(String name, String type){
+        if (type.equals("variable")){
+        
+                Token s = new Token(name,"Yield (Variable)");
+                TokenStream.add(s);
+                //FINISHED VARIABLE YIELD!
+        } else if (type.equals("string literal")){
+                Token s = new Token(name,"Yield (String Literal)");
+                TokenStream.add(s);
+                //FINISHED VARIABLE YIELD!
+        }
+        
+    } 
+    
+    public static void yield9(String statement, int pos){
+        int counter = pos;
+        // Checks comment string
+       
+        String name = "";
+        char temp = ' ';
+        
+        if(!letter(statement.charAt(counter))) 
+            ErrorStartWithLetter();
+        
+        
+        while(statement.charAt(counter) != ')' ){
+            temp = statement.charAt(counter);
+           
+            
+            if(letter(temp) || digit(temp) || whitespace(temp))
+                name += temp;
+            else
+                break;
+            
+            counter++;
+        }
+        
+        if(statement.charAt(counter++) == '"'){
+            if (statement.charAt(counter++) == ')'){
+                if (statement.length() == counter){
+                yield10(name, "string literal");
+            }
+            }
+        }else{
+                WrongSyntaxError();
+        }
+    }
+    
+    
     private static void ErrorStartWithLetter(){
         
         System.out.println("Variable Name Should Start with letter");
@@ -237,7 +336,7 @@ public class LexicalLina {
                     int1(statement,counter+1);
                     break;
                 case 'y': // this starts off the integer path
-                    yield1();
+                    yield1(statement,counter+1);
                     break;
                 default:
                     break;
@@ -245,10 +344,6 @@ public class LexicalLina {
            
            
         }
-        
-        
-        
-        
         System.out.println("LIST OF TOKENS: ");
         for(Token T: TokenStream){
             System.out.print("< "+T.getName()+" , "+T.getPurpose()+" >\n");
